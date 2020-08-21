@@ -22,16 +22,20 @@ func NewMemoryStorage() *MemoryStorage {
 
 // Write ...
 func (mem *MemoryStorage) Write(data interface{}) {
-	mem.Lock()
-	defer mem.Unlock()
 
 	mem.Data[uint(len(mem.Data))] = data
 }
 
+// WriteArray ...
+func (mem *MemoryStorage) WriteArray(data []interface{}) {
+
+	for _, value := range data {
+		mem.Write(value)
+	}
+}
+
 // Read ...
 func (mem *MemoryStorage) Read(id uint) (interface{}, error) {
-	mem.Lock()
-	defer mem.Unlock()
 
 	data := mem.Data[id]
 	if data == nil {

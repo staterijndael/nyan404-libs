@@ -2,6 +2,7 @@ package database
 
 import (
 	"errors"
+	"fmt"
 	"reflect"
 	"sync"
 )
@@ -9,7 +10,6 @@ import (
 type opts struct {
 	model interface{}
 	field string
-	equal interface{}
 }
 
 // ModelStorage ...
@@ -44,15 +44,6 @@ func (mos *ModelStorage) Field(field string) *ModelStorage {
 	return mos
 }
 
-// Equal ...
-func (mos *ModelStorage) Equal(value interface{}) *ModelStorage {
-	mos.Lock()
-	mos.equal = value
-	mos.Unlock()
-
-	return mos
-}
-
 // Get ...
 func (mos *ModelStorage) Get() (interface{}, error) {
 	mos.Lock()
@@ -69,6 +60,8 @@ func (mos *ModelStorage) Get() (interface{}, error) {
 	field := s.FieldByName(mos.field)
 
 	for _, value := range mos.storage.Data {
+		fmt.Println(reflect.TypeOf(value))
+		fmt.Println(reflect.TypeOf(mos.Model))
 		if reflect.TypeOf(value) == reflect.TypeOf(mos.Model) {
 			localValue := reflect.ValueOf(value)
 
@@ -81,12 +74,14 @@ func (mos *ModelStorage) Get() (interface{}, error) {
 			}
 			switch field.Kind() {
 			case reflect.Int:
+				fmt.Println(0)
 				valueCompareLocal := int(fieldLocal.Int())
 
 				if valueCompareLocal == int(field.Int()) {
 					return value, nil
 				}
 			case reflect.Uint:
+				fmt.Println(1)
 				valueCompareLocal := uint(fieldLocal.Uint())
 
 				if valueCompareLocal == uint(field.Uint()) {
@@ -103,5 +98,7 @@ func (mos *ModelStorage) Get() (interface{}, error) {
 
 		}
 	}
+
+	return nil, errors.New("Value not found")
 
 }
