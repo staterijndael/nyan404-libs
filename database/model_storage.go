@@ -116,3 +116,11 @@ func (mos *ModelStorage) Get() (interface{}, error) {
 func (mos *ModelStorage) Set() {
 	mos.storage.Write(mos.model)
 }
+
+// SetArray ...
+func (mos *ModelStorage) SetArray(data []interface{}) {
+	mos.Lock()
+	defer mos.Unlock()
+
+	mos.storage.WriteArray(data)
+}
