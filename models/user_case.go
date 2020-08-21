@@ -61,3 +61,5 @@ type Answer struct {
 	Text   string
 	Weight uint
 }
+
+// AnswerUser ...
