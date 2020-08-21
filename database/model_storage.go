@@ -2,7 +2,6 @@ package database
 
 import (
 	"errors"
-	"fmt"
 	"reflect"
 	"sync"
 )
@@ -60,9 +59,7 @@ func (mos *ModelStorage) Get() (interface{}, error) {
 	field := s.FieldByName(mos.field)
 
 	for _, value := range mos.storage.Data {
-		fmt.Println(reflect.TypeOf(value))
-		fmt.Println(reflect.TypeOf(mos.Model))
-		if reflect.TypeOf(value) == reflect.TypeOf(mos.Model) {
+		if reflect.TypeOf(value) == reflect.TypeOf(mos.model) {
 			localValue := reflect.ValueOf(value)
 
 			sValue := localValue.Elem()
@@ -74,14 +71,12 @@ func (mos *ModelStorage) Get() (interface{}, error) {
 			}
 			switch field.Kind() {
 			case reflect.Int:
-				fmt.Println(0)
 				valueCompareLocal := int(fieldLocal.Int())
 
 				if valueCompareLocal == int(field.Int()) {
 					return value, nil
 				}
 			case reflect.Uint:
-				fmt.Println(1)
 				valueCompareLocal := uint(fieldLocal.Uint())
 
 				if valueCompareLocal == uint(field.Uint()) {
