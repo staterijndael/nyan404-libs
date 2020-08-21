@@ -8,7 +8,7 @@ import (
 
 type opts struct {
 	model interface{}
-	field interface{}
+	field string
 	equal interface{}
 }
 
@@ -54,17 +54,54 @@ func (mos *ModelStorage) Equal(value interface{}) *ModelStorage {
 }
 
 // Get ...
-func (mos *ModelStorage) Get() error {
+func (mos *ModelStorage) Get() (interface{}, error) {
 	mos.Lock()
 	defer mos.Unlock()
 
-	typeOfModel := reflect.TypeOf(mos.model)
-	s := typeOfModel.Elem()
+	valueOfModel := reflect.ValueOf(mos.model)
+
+	s := valueOfModel.Elem()
 
 	if s.Kind() != reflect.Struct {
-		return errors.New("Should be structure model")
+		return nil, errors.New("Should be structure model")
 	}
 
-	field := s.FieldByName(mos.Field)
+	field := s.FieldByName(mos.field)
+
+	for _, value := range mos.storage.Data {
+		if reflect.TypeOf(value) == reflect.TypeOf(mos.Model) {
+			localValue := reflect.ValueOf(value)
+
+			sValue := localValue.Elem()
+
+			fieldLocal := sValue.FieldByName(mos.field)
+
+			if s.Kind() != reflect.Struct {
+				return nil, errors.New("Should be structure model")
+			}
+			switch field.Kind() {
+			case reflect.Int:
+				valueCompareLocal := int(fieldLocal.Int())
+
+				if valueCompareLocal == int(field.Int()) {
+					return value, nil
+				}
+			case reflect.Uint:
+				valueCompareLocal := uint(fieldLocal.Uint())
+
+				if valueCompareLocal == uint(field.Uint()) {
+					return value, nil
+				}
+
+			case reflect.String:
+				valueCompareLocal := fieldLocal.String()
+
+				if valueCompareLocal == field.String() {
+					return value, nil
+				}
+			}
+
+		}
+	}
 
 }

@@ -8,5 +8,5 @@ type Scoreboard struct {
 // SingleScore ...
 type SingleScore struct {
 	FI    string
-	Score uint16
+	Score uint
 }
