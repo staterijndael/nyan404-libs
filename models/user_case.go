@@ -63,3 +63,8 @@ type Answer struct {
 }
 
 // AnswerUser ...
+type AnswerUser struct {
+	UserCaseID uint
+	Answer
+	UserID uint
+}
