@@ -57,6 +57,7 @@ type Description struct {
 
 // Answer ...
 type Answer struct {
+	ID     uint
 	Text   string
 	Weight uint
 }
