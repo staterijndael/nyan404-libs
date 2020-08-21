@@ -118,9 +118,9 @@ func (mos *ModelStorage) Set() {
 }
 
 // SetArray ...
-func (mos *ModelStorage) SetArray(data []interface{}) {
+func (mos *ModelStorage) SetArray(data interface{}) {
 	mos.Lock()
 	defer mos.Unlock()
 
-	mos.storage.WriteArray(data)
+	mos.storage.WriteArray(data.([]interface{}))
 }
