@@ -97,3 +97,8 @@ func (mos *ModelStorage) Get() (interface{}, error) {
 	return nil, errors.New("Value not found")
 
 }
+
+// Set ...
+func (mos *ModelStorage) Set() {
+	mos.storage.Write(mos.model)
+}
