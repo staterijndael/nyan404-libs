@@ -9,7 +9,6 @@ const (
 
 // UserCase ...
 type UserCase struct {
-	PictureID uint
 	UserInfo
 	Case
 }
@@ -22,11 +21,12 @@ type Case struct {
 
 // UserInfo ...
 type UserInfo struct {
-	Name    string
-	Surname string
-	Gender  string
-	Age     string
-	Job     job
+	Name      string
+	PictureID uint
+	Surname   string
+	Gender    string
+	Age       string
+	Job       job
 }
 
 // Description ...
