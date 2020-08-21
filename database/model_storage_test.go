@@ -33,6 +33,18 @@ func TestModelStorage_Get(t *testing.T) {
 
 	db := NewModelStorage()
 
+	testUserCaseModel := &models.UserCase{
+		UserInfo: models.UserInfo{
+			Name: "Василий",
+		},
+	}
+
+	db.Model(testUserCaseModel).Set()
+
+	outValue, err := db.Model(&models.UserCase{}).Field("Name").Equal("Василий").Get()
+	assert.NoError(t, err)
+	assert.Equal(t, outValue.(*models.UserCase).Name, "Василий")
+
 	db.storage.WriteArray(arrayToRecord)
 
 	value, err := db.Model(&models.UserCase{}).Field("PictureID").Equal(11).Get()
