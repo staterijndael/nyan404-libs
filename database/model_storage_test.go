@@ -35,7 +35,7 @@ func TestModelStorage_Get(t *testing.T) {
 
 	db.storage.WriteArray(arrayToRecord)
 
-	value, err := db.Model(&models.UserCase{UserInfo: models.UserInfo{PictureID: 114}}).Field("PictureID").Get()
+	value, err := db.Model(&models.UserCase{}).Field("PictureID").Equal(114).Get()
 	assert.NoError(t, err)
 	assert.Equal(t, value.(*models.UserCase).PictureID, uint(114))
 

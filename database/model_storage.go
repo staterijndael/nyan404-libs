@@ -9,6 +9,11 @@ import (
 type opts struct {
 	model interface{}
 	field string
+	condition
+}
+
+type condition struct {
+	equal interface{}
 }
 
 // ModelStorage ...
@@ -43,20 +48,19 @@ func (mos *ModelStorage) Field(field string) *ModelStorage {
 	return mos
 }
 
+// Equal ...
+func (mos *ModelStorage) Equal(value interface{}) *ModelStorage {
+	mos.Lock()
+	mos.equal = value
+	mos.Unlock()
+
+	return mos
+}
+
 // Get ...
 func (mos *ModelStorage) Get() (interface{}, error) {
 	mos.Lock()
 	defer mos.Unlock()
-
-	valueOfModel := reflect.ValueOf(mos.model)
-
-	s := valueOfModel.Elem()
-
-	if s.Kind() != reflect.Struct {
-		return nil, errors.New("Should be structure model")
-	}
-
-	field := s.FieldByName(mos.field)
 
 	for _, value := range mos.storage.Data {
 		if reflect.TypeOf(value) == reflect.TypeOf(mos.model) {
@@ -66,27 +70,37 @@ func (mos *ModelStorage) Get() (interface{}, error) {
 
 			fieldLocal := sValue.FieldByName(mos.field)
 
-			if s.Kind() != reflect.Struct {
+			if sValue.Kind() != reflect.Struct {
 				return nil, errors.New("Should be structure model")
 			}
-			switch field.Kind() {
+
+			switch fieldLocal.Kind() {
 			case reflect.Int:
 				valueCompareLocal := int(fieldLocal.Int())
 
-				if valueCompareLocal == int(field.Int()) {
+				if valueCompareLocal == mos.opts.equal.(int) {
 					return value, nil
 				}
 			case reflect.Uint:
 				valueCompareLocal := uint(fieldLocal.Uint())
 
-				if valueCompareLocal == uint(field.Uint()) {
+				if reflect.TypeOf(mos.opts.equal).Kind() == reflect.Int {
+					valueCompare := mos.opts.equal.(int)
+
+					if valueCompareLocal == uint(valueCompare) {
+						return value, nil
+					}
+					continue
+				}
+
+				if valueCompareLocal == mos.opts.equal.(uint) {
 					return value, nil
 				}
 
 			case reflect.String:
 				valueCompareLocal := fieldLocal.String()
 
-				if valueCompareLocal == field.String() {
+				if valueCompareLocal == mos.opts.equal.(string) {
 					return value, nil
 				}
 			}
