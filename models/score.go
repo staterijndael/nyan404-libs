@@ -7,6 +7,12 @@ type Scoreboard struct {
 
 // SingleScore ...
 type SingleScore struct {
-	FI    string
+	FI
 	Score uint
+}
+
+// FI ...
+type FI struct {
+	Firstname string
+	Lastname  string
 }
