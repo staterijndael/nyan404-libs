@@ -3,6 +3,8 @@
 Internal libs for nyan404 server
 ## Basic usage internal database
 ```go
+	db := NewModelStorage()
+	
     	testUserCaseModel := &models.UserCase{
 		UserInfo: models.UserInfo{
 			Name: "Василий",
