@@ -8,6 +8,6 @@ type User struct {
 
 // FIuser ...
 type FIuser struct {
-	Firstname string
-	Lastname  string
+	Name    string
+	Surname string
 }
