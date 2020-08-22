@@ -77,7 +77,7 @@ type UserInfo struct {
 	Gender    string
 	Status    string
 	Age       uint
-	Job       job
+	Job       string
 }
 
 // Description ...
