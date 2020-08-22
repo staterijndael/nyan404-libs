@@ -45,7 +45,7 @@ type UserInfo struct {
 	PictureID uint
 	Surname   string
 	Gender    string
-	Age       string
+	Age       uint
 	Job       job
 }
 
