@@ -240,7 +240,11 @@ func (mos *ModelStorage) GetArray() (interface{}, error) {
 		}
 	}
 
-	return nil, errors.New("Value not found")
+	if len(result) == 0 {
+		return nil, errors.New("Values not found")
+	}
+
+	return result, nil
 }
 
 // Set ...
