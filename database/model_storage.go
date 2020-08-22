@@ -237,6 +237,10 @@ func (mos *ModelStorage) GetArray() (interface{}, error) {
 
 			}
 
+			if mos.opts.equal == nil {
+				result = append(result, value)
+			}
+
 		}
 	}
 
