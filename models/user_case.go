@@ -38,6 +38,7 @@ type UserCase struct {
 type Case struct {
 	ID       uint
 	AnswerID uint
+	CaseID   uint
 	Description
 	Ans []Answer
 }
