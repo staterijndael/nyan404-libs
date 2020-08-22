@@ -30,7 +30,7 @@ const (
 // UserCase ...
 type UserCase struct {
 	UserInfo
-	cases []Case
+	Cases []Case
 }
 
 // Case ...
