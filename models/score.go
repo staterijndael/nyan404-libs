@@ -7,6 +7,7 @@ type Scoreboard struct {
 
 // SingleScore ...
 type SingleScore struct {
+	UserID uint
 	FIscore
 	Score uint
 }
