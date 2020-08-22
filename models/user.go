@@ -18,6 +18,6 @@ type FIuser struct {
 
 // UserCounter ...
 type UserCounter struct {
-	UserID uint
-	helpers.AnswerCounter
+	UserID        uint
+	AnswerCounter *helpers.AnswerCounter
 }
