@@ -17,6 +17,7 @@ type AnswerCounter struct {
 	Panoramic    float32
 	BalanceValue float32
 	Offset       float32
+	Beyound      float32
 }
 
 // GetAnswerCounter ...
@@ -30,6 +31,7 @@ func (ans *AnswerCounter) InitAnswerCounter() {
 	ans.BalanceValue = ans.StarterValue
 	ans.Panoramic = ans.BalanceValue * 2
 	ans.Offset = ans.Panoramic * 0.33
+	ans.Beyound = 0.64 * ans.StarterValue
 }
 
 // GenerateOffset ...
@@ -52,11 +54,11 @@ func (ans *AnswerCounter) RecountBalance(offset float32) {
 
 // KindOfBeyond ...
 func (ans *AnswerCounter) KindOfBeyond() Status {
-	if ans.StarterValue-ans.Offset < ans.BalanceValue {
+	if ans.StarterValue-ans.Beyound > ans.BalanceValue {
 		return FAIL
 	}
 
-	if ans.StarterValue+ans.Offset > ans.BalanceValue {
+	if ans.StarterValue+ans.Beyound < ans.BalanceValue {
 		return SUCCESS
 	}
 
