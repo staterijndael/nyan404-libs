@@ -29,12 +29,15 @@ const (
 
 // UserCase ...
 type UserCase struct {
+	ID uint
 	UserInfo
 	Cases []*Case
 }
 
 // Case ...
 type Case struct {
+	ID       uint
+	AnswerID uint
 	Description
 	Ans []Answer
 }
@@ -59,7 +62,7 @@ type Description struct {
 type Answer struct {
 	ID           uint
 	Text         string
-	Significance uint
+	Significance int
 }
 
 // AnswerUser ...

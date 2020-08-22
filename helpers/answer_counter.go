@@ -32,18 +32,22 @@ func (ans *AnswerCounter) InitAnswerCounter() {
 	ans.Offset = ans.Panoramic * 0.33
 }
 
-// GenerateCoeff ...
-func (ans *AnswerCounter) GenerateCoeff(significance uint) (float32, error) {
-	if significance < 1 || significance > 5 {
-		return 0, errors.New("Significance should be in range 1 to 5")
+// GenerateOffset ...
+func (ans *AnswerCounter) GenerateOffset(significance int) (float32, error) {
+	if significance < -5 || significance > 5 {
+		return 0, errors.New("Significance should be in range -5 to 5")
+	}
+
+	if significance < 0 {
+		return (ans.Panoramic * float32(significance) * 0.025) * -1, nil
 	}
 
 	return ans.Panoramic * float32(significance) * 0.025, nil
 }
 
 // RecountBalance ...
-func (ans *AnswerCounter) RecountBalance(coeff float32) {
-	ans.BalanceValue = ans.BalanceValue * coeff
+func (ans *AnswerCounter) RecountBalance(offset float32) {
+	ans.BalanceValue = ans.BalanceValue + offset
 }
 
 // KindOfBeyond ...

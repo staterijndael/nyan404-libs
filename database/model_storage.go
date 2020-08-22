@@ -57,6 +57,10 @@ func (mos *ModelStorage) Equal(value interface{}) *ModelStorage {
 	return mos
 }
 
+// Update ...
+func (mos *ModelStorage) 
+
+
 // Get ...
 func (mos *ModelStorage) Get() (interface{}, error) {
 	mos.Lock()
