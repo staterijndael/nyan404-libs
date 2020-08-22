@@ -30,8 +30,7 @@ const (
 // UserCase ...
 type UserCase struct {
 	UserInfo
-	Case
-	significance uint
+	cases []Case
 }
 
 // Case ...
@@ -58,9 +57,9 @@ type Description struct {
 
 // Answer ...
 type Answer struct {
-	ID     uint
-	Text   string
-	Weight uint
+	ID           uint
+	Text         string
+	Significance uint
 }
 
 // AnswerUser ...
