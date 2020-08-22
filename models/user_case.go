@@ -31,6 +31,7 @@ const (
 type UserCase struct {
 	UserInfo
 	Case
+	significance uint
 }
 
 // Case ...
