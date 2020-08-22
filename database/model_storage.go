@@ -16,6 +16,12 @@ type condition struct {
 	equal interface{}
 }
 
+func (mos *ModelStorage) resetOpts() {
+	mos.model = nil
+	mos.field = ""
+	mos.equal = nil
+}
+
 // ModelStorage ...
 type ModelStorage struct {
 	storage *MemoryStorage
@@ -61,6 +67,7 @@ func (mos *ModelStorage) Equal(value interface{}) *ModelStorage {
 func (mos *ModelStorage) Update(value interface{}) error {
 	mos.Lock()
 	defer mos.Unlock()
+	defer mos.resetOpts()
 
 	for _, value := range mos.storage.Data {
 		if reflect.TypeOf(value) == reflect.TypeOf(mos.model) {
@@ -133,6 +140,7 @@ func (mos *ModelStorage) Update(value interface{}) error {
 func (mos *ModelStorage) Get() (interface{}, error) {
 	mos.Lock()
 	defer mos.Unlock()
+	defer mos.resetOpts()
 
 	for _, value := range mos.storage.Data {
 		if reflect.TypeOf(value) == reflect.TypeOf(mos.model) {
@@ -188,6 +196,7 @@ func (mos *ModelStorage) Get() (interface{}, error) {
 func (mos *ModelStorage) GetArray() (interface{}, error) {
 	mos.Lock()
 	defer mos.Unlock()
+	defer mos.resetOpts()
 
 	var result []interface{}
 
@@ -260,6 +269,7 @@ func (mos *ModelStorage) Set() {
 func (mos *ModelStorage) Delete() error {
 	mos.Lock()
 	defer mos.Unlock()
+	defer mos.resetOpts()
 
 	for key, value := range mos.storage.Data {
 		if reflect.TypeOf(value) == reflect.TypeOf(mos.model) {
