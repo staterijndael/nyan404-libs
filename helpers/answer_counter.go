@@ -11,6 +11,13 @@ const (
 	NOPE
 )
 
+type Side int
+
+const (
+	TOP Side = iota
+	BOT
+)
+
 // AnswerCounter ...
 type AnswerCounter struct {
 	StarterValue float32
@@ -63,4 +70,13 @@ func (ans *AnswerCounter) KindOfBeyond() Status {
 	}
 
 	return NOPE
+}
+
+// CheckSide ...
+func (ans *AnswerCounter) CheckSide() Side {
+	if ans.BalanceValue >= ans.StarterValue {
+		return TOP
+	}
+
+	return BOT
 }
