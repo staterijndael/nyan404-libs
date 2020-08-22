@@ -256,6 +256,64 @@ func (mos *ModelStorage) Set() {
 	mos.storage.Write(mos.model)
 }
 
+// Delete ...
+func (mos *ModelStorage) Delete() error {
+	mos.Lock()
+	defer mos.Unlock()
+
+	for key, value := range mos.storage.Data {
+		if reflect.TypeOf(value) == reflect.TypeOf(mos.model) {
+			localValue := reflect.ValueOf(value)
+
+			sValue := localValue.Elem()
+
+			fieldLocal := sValue.FieldByName(mos.field)
+
+			if sValue.Kind() != reflect.Struct {
+				return errors.New("Should be structure model")
+			}
+
+			switch fieldLocal.Kind() {
+			case reflect.Int:
+				valueCompareLocal := int(fieldLocal.Int())
+
+				if valueCompareLocal == mos.opts.equal.(int) {
+					delete(mos.storage.Data, key)
+					return nil
+				}
+			case reflect.Uint:
+				valueCompareLocal := uint(fieldLocal.Uint())
+
+				if reflect.TypeOf(mos.opts.equal).Kind() == reflect.Int {
+					valueCompare := mos.opts.equal.(int)
+
+					if valueCompareLocal == uint(valueCompare) {
+						delete(mos.storage.Data, key)
+						return nil
+					}
+					continue
+				}
+
+				if valueCompareLocal == mos.opts.equal.(uint) {
+					delete(mos.storage.Data, key)
+					return nil
+				}
+
+			case reflect.String:
+				valueCompareLocal := fieldLocal.String()
+
+				if valueCompareLocal == mos.opts.equal.(string) {
+					delete(mos.storage.Data, key)
+					return nil
+				}
+			}
+
+		}
+	}
+
+	return errors.New("Value not found")
+}
+
 // SetArray ...
 func (mos *ModelStorage) SetArray(data interface{}) {
 	mos.Lock()
