@@ -1,30 +1,56 @@
 package models
 
-type job int
+type pic int
+type job string
 
 const (
-	JOB_ADD job = iota
-	JOB_DOCTOR_GIRL
-	JOB_KID
-	JOB_REFEREE
-	JOB_COOK
-	JOB_DOCTOR_BOY
-	JOB_LAWYER
-	JOB_SECRETARY
-	JOB_KING
-	JOB_VAMPIR
-	JOB_TAXI
-	JOB_POLICEMAN_BOY
-	JOB_POLICEMAN_GIRL
-	JOB_QUEEN
-	JOB_DELETE
-	JOB_SINGER
-	JOB_SPY_BOY
-	JOB_SUPERMAN
-	JOB_SPY_GIRL
-	JOB_STRANGER_GIRL
-	JOB_SUPERGIRL
-	JOB_MINER
+	PIC_ADD pic = iota
+	PIC_DOCTOR_GIRL
+	PIC_KID
+	PIC_REFEREE
+	PIC_COOK
+	PIC_DOCTOR_BOY
+	PIC_LAWYER
+	PIC_SECRETARY
+	PIC_KING
+	PIC_VAMPIR
+	PIC_TAXI
+	PIC_POLICEMAN_BOY
+	PIC_POLICEMAN_GIRL
+	PIC_QUEEN
+	PIC_DELETE
+	PIC_SINGER
+	PIC_SPY_BOY
+	PIC_SUPERMAN
+	PIC_SPY_GIRL
+	PIC_STRANGER_GIRL
+	PIC_SUPERGIRL
+	PIC_MINER
+)
+
+const (
+	JOB_ADD            job = "ADD"
+	JOB_DOCTOR_GIRL        = "Доктор"
+	JOB_KID                = "Ребенок"
+	JOB_REFEREE            = "Судья"
+	JOB_COOK               = "Повар"
+	JOB_DOCTOR_BOY         = "Доктор"
+	JOB_LAWYER             = "Адвокат"
+	JOB_SECRETARY          = "Секретарь"
+	JOB_KING               = "Король"
+	JOB_VAMPIR             = "Вампир"
+	JOB_TAXI               = "Таксист"
+	JOB_POLICEMAN_BOY      = "Полицейский"
+	JOB_POLICEMAN_GIRL     = "Полицейский"
+	JOB_QUEEN              = "Королева"
+	JOB_DELETE             = "DELETE"
+	JOB_SINGER             = "Певец"
+	JOB_SPY_BOY            = "Шпион"
+	JOB_SUPERMAN           = "Супермен"
+	JOB_SPY_GIRL           = "Шпион"
+	JOB_STRANGER_GIRL      = "Странная"
+	JOB_SUPERGIRL          = "Супер-девушка"
+	JOB_MINER              = "Шахтер"
 )
 
 // UserCase ...
